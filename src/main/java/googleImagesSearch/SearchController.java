@@ -27,9 +27,9 @@ public class SearchController {
 	public LinkedList<String> searchImage(@RequestParam ("file") MultipartFile file) throws IOException
 	{
 		LinkedList<String> movieDetails=new LinkedList<String>();
-
+		String movieId="";
 		File temp_file=convert(file);
-		String path="http://flickwiz.xululabs.us/sites/default/files/MV5BMTgyNDA1MTkyM15BMl5BanBnXkFtZTgwMDE0MTg5NjE%40._V1_SX640_SY720_.jpg";
+		//String path="http://flickwiz.xululabs.us/sites/default/files/MV5BMTgyNDA1MTkyM15BMl5BanBnXkFtZTgwMDE0MTg5NjE%40._V1_SX640_SY720_.jpg";
 		temp_file=saveImageforUrl(temp_file);
 		String name=temp_file.getName();
 		System.out.println(name);
@@ -44,19 +44,19 @@ public class SearchController {
 		//System.out.println(links.toString());
 		
 		String temp=getUrl(links);
-		String movieId=getMovieId(temp);
+		
 		
 
 
-		if(movieId=="")
-		{
+		if(temp=="")
+		{   
 			movieDetails.add("NO IMDB DETAILS IN SEARCH");
 			System.out.println("File deleted"+temp_file.exists());
 			System.out.println(temp_file.delete());
 			return movieDetails;
 		}else{
-
-		movieDetails=Services.getImdbData(movieId);
+			movieId=getMovieId(temp);
+			movieDetails=Services.getImdbData(movieId);
 		
 		System.out.println(movieDetails.toString());
 		
