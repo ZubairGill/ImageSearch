@@ -51,8 +51,10 @@ public class SearchController {
 		if(movieId=="")
 		{
 			movieDetails.add("NO IMDB DETAILS IN SEARCH");
+			System.out.println("File deleted"+temp_file.exists());
+			System.out.println(temp_file.delete());
 			return movieDetails;
-		}
+		}else{
 
 		movieDetails=Services.getImdbData(movieId);
 		
@@ -60,6 +62,8 @@ public class SearchController {
 		
 		System.out.println("File deleted"+temp_file.exists());
 		System.out.println(temp_file.delete());
+		
+		}
 		return movieDetails;
 	}
 	
