@@ -33,7 +33,7 @@ public class SearchController {
 		System.out.println(name);
 		
 		
-		
+		System.out.println("http://flickwiz.xululabs.us/sites/default/files/appimages/"+name);
 		Document data=Starter.getResult("http://flickwiz.xululabs.us/sites/default/files/appimages/"+name);
 		//Document data=Starter.getResult(path);
 		Elements d=data.select("#rso >.srg > .g:first-child");
@@ -49,7 +49,7 @@ public class SearchController {
 		System.out.println(movieDetails.toString());
 		
 		System.out.println("File deleted"+temp_file.exists());
-		System.out.println(temp_file.delete());
+		//System.out.println(temp_file.delete());
 		return movieDetails;
 	}
 	
