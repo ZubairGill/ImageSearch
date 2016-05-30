@@ -26,6 +26,8 @@ public class SearchController {
 	@RequestMapping(value="/upload",method=RequestMethod.POST)
 	public LinkedList<String> searchImage(@RequestParam ("file") MultipartFile file) throws IOException
 	{
+		LinkedList<String> movieDetails=new LinkedList<String>();
+
 		File temp_file=convert(file);
 		String path="http://flickwiz.xululabs.us/sites/default/files/MV5BMTgyNDA1MTkyM15BMl5BanBnXkFtZTgwMDE0MTg5NjE%40._V1_SX640_SY720_.jpg";
 		temp_file=saveImageforUrl(temp_file);
@@ -44,13 +46,15 @@ public class SearchController {
 		String temp=getUrl(links);
 		String movieId=getMovieId(temp);
 		
+
+
 		if(movieId=="")
 		{
 			movieDetails.add("NO IMDB DETAILS IN SEARCH");
 			return movieDetails;
 		}
 
-		LinkedList<String> movieDetails=Services.getImdbData(movieId);
+		movieDetails=Services.getImdbData(movieId);
 		
 		System.out.println(movieDetails.toString());
 		
