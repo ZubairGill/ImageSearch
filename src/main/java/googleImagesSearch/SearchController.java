@@ -44,12 +44,18 @@ public class SearchController {
 		String temp=getUrl(links);
 		String movieId=getMovieId(temp);
 		
+		if(movieId=="")
+		{
+			movieDetails.add("NO IMDB DETAILS IN SEARCH");
+			return movieDetails;
+		}
+
 		LinkedList<String> movieDetails=Services.getImdbData(movieId);
 		
 		System.out.println(movieDetails.toString());
 		
 		System.out.println("File deleted"+temp_file.exists());
-		//System.out.println(temp_file.delete());
+		System.out.println(temp_file.delete());
 		return movieDetails;
 	}
 	
@@ -75,16 +81,18 @@ public class SearchController {
 
 	private String getUrl(Elements links) {
 		String site="";
+		String temp="";
 		for(int i=0;i<links.size();i++)
 		{
 			 site=links.get(i).attr("href");
 				if(site.contains(("http://www.imdb.com/title")))
 					{
+						temp=site;
 					System.err.println(site);
 					return site;
 					}else{System.out.println("Does not contain this uurl");}
 		}
-		return site;
+		return temp;
 	}
 
 
