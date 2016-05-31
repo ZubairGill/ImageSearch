@@ -123,10 +123,25 @@ public class Starter {
 		BufferedWriter wr1=new BufferedWriter(new FileWriter("index2.html"));
 		wr1.write(document1.toString());
 		wr1.close();
-		//System.out.println(document);
+		//System.err.println(document1.location());
 		return document1;
 	}
 	
+	public static Document secondSearch(String url) throws IOException
+	{
+		Document document=Jsoup.connect(url)
+				.header("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
+				//.header("Referer","https://images.google.com/")
+				.header("Upgrade-Insecure-Requests","1")
+				.header("User-Agent","Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36")
+				.get();
+		
+		BufferedWriter wr=new BufferedWriter(new FileWriter("index.html"));
+		wr.write(document.toString());
+		wr.close();
+		
+		return document;
+	}
 	
 	private static String trimUrl(String data) {
 		

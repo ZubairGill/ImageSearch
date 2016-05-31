@@ -9,12 +9,18 @@ import java.util.LinkedList;
 import javax.imageio.ImageIO;
 
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+
+/*
+ * &safe=active&q=american%20sniper
+ */
 
 @RestController
 public class SearchController {
@@ -28,16 +34,32 @@ public class SearchController {
 	{
 		LinkedList<String> movieDetails=new LinkedList<String>();
 		String movieId="";
+		String movieName="";
+		String finaleUrl="";
+		String url="";
+		String imbdCard=" site:imdb.com";
+		String safeCard="&safe=active&q=";
+		
 		File temp_file=convert(file);
-		//String path="http://flickwiz.xululabs.us/sites/default/files/MV5BMTgyNDA1MTkyM15BMl5BanBnXkFtZTgwMDE0MTg5NjE%40._V1_SX640_SY720_.jpg";
+		String path="http://flickwiz.xululabs.us/sites/default/files/appimages/temp1464604450607img.jpg";
 		temp_file=saveImageforUrl(temp_file);
 		String name=temp_file.getName();
 		System.out.println(name);
 		
 		
-		System.out.println("http://flickwiz.xululabs.us/sites/default/files/appimages/"+name);
+		//System.out.println("http://flickwiz.xululabs.us/sites/default/files/appimages/"+name);
 		Document data=Starter.getResult("http://flickwiz.xululabs.us/sites/default/files/appimages/"+name);
 		//Document data=Starter.getResult(path);
+		
+			url=data.location();
+			System.err.println(url);
+			Elements e=data.getElementsByClass("_gUb");
+			movieName=e.get(0).text().toString();
+			System.err.println(safeCard+movieName+imbdCard);
+		
+			finaleUrl=url+safeCard+movieName+imbdCard;
+			
+			
 		Elements d=data.select("#rso >.srg > .g:first-child");
 		//System.out.println(d.toString());
 		Elements links=d.select("a");
@@ -49,17 +71,40 @@ public class SearchController {
 
 
 		if(temp=="")
-		{   
-			movieDetails.add("NO IMDB DETAILS IN SEARCH");
+		{
+			//Going for 2nd option..
+			
+			Document dataWithCard=Starter.secondSearch(finaleUrl);
+			Elements dd=dataWithCard.select("#rso >.srg > .g:first-child");
+			//System.out.println(d.toString());
+			Elements linkhref=dd.select("a");
+			//System.out.println(linkhref.toString());		
+			
+			String tempLink=getUrl(linkhref);
+				if(tempLink=="")
+				{
+					movieDetails.add("NO IMDB DETAILS IN SEARCH");
+					System.out.println("File deleted"+temp_file.exists());
+					System.out.println(temp_file.delete());
+					
+				}else{
+			movieId=getMovieId(tempLink);
+			movieDetails=Services.getImdbData(movieId);
+			
+			
 			System.out.println("File deleted"+temp_file.exists());
 			System.out.println(temp_file.delete());
+				}
+			
+			
+			
 			return movieDetails;
 		}else{
 			movieId=getMovieId(temp);
 			movieDetails=Services.getImdbData(movieId);
+			
 		
 		System.out.println(movieDetails.toString());
-		
 		System.out.println("File deleted"+temp_file.exists());
 		System.out.println(temp_file.delete());
 		
@@ -77,8 +122,11 @@ public class SearchController {
 		int beginIndex=temp.indexOf("/tt")+1;
 		int endIndex=temp.length()-1;
 		
+		
+		
 		System.out.println("Start index : "+beginIndex);
 		System.out.println("End index : "+endIndex);
+		//System.out.println(temp.lastIndexOf('/'));
 		id=temp.substring(beginIndex, endIndex);
 		
 		System.out.println("The id of the movie is : "+id);
@@ -98,7 +146,9 @@ public class SearchController {
 						temp=site;
 					System.err.println(site);
 					return site;
-					}else{System.out.println("Does not contain this uurl");}
+					}else{
+						//System.out.println("Does not contain this uurl");
+					}
 		}
 		return temp;
 	}
