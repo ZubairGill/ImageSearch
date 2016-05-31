@@ -41,7 +41,7 @@ public class SearchController {
 		String safeCard="&safe=active&q=";
 		
 		File temp_file=convert(file);
-		String path="http://flickwiz.xululabs.us/sites/default/files/appimages/temp1464604450607img.jpg";
+		String path="http://www.cbssports.com/images/blogs/nike-football.jpg";
 		temp_file=saveImageforUrl(temp_file);
 		String name=temp_file.getName();
 		System.out.println(name);
@@ -120,13 +120,13 @@ public class SearchController {
 		System.out.println("The url is :"+temp);
 		
 		int beginIndex=temp.indexOf("/tt")+1;
-		int endIndex=temp.length()-1;
+		int endIndex=beginIndex+9;
 		
 		
 		
-		System.out.println("Start index : "+beginIndex);
-		System.out.println("End index : "+endIndex);
-		//System.out.println(temp.lastIndexOf('/'));
+		System.out.print("Start index : "+beginIndex);
+		System.out.println(" End index : "+endIndex);
+		
 		id=temp.substring(beginIndex, endIndex);
 		
 		System.out.println("The id of the movie is : "+id);
