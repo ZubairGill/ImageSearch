@@ -26,8 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class SearchController {
 
 	
-	//private final static  String BASE_PATH="images/"; //for local
-	private final static  String BASE_PATH="/mnt/www/flickwiz.xululabs.us/htdocs/sites/default/files/appimages/"; //for server
+	private final static  String BASE_PATH="images/"; //for local
+	//private final static  String BASE_PATH="/mnt/www/flickwiz.xululabs.us/htdocs/sites/default/files/appimages/"; //for server
 	
 	@RequestMapping(value="/upload",method=RequestMethod.POST)
 	public LinkedList<String> searchImage(@RequestParam ("file") MultipartFile file) throws IOException
@@ -41,15 +41,15 @@ public class SearchController {
 		String safeCard="&safe=active&q=";
 		
 		File temp_file=convert(file);
-		String path="http://www.cbssports.com/images/blogs/nike-football.jpg";
+		String path="https://www.sideshowtoy.com/assets/products/902040-iron-man-mark-17-heartbreaker/lg/902040-iron-man-mark-17-heartbreaker-007.jpg";
 		temp_file=saveImageforUrl(temp_file);
 		String name=temp_file.getName();
 		System.out.println(name);
 		
 		
 		//System.out.println("http://flickwiz.xululabs.us/sites/default/files/appimages/"+name);
-		Document data=Starter.getResult("http://flickwiz.xululabs.us/sites/default/files/appimages/"+name);
-		//Document data=Starter.getResult(path);
+		//Document data=Starter.getResult("http://flickwiz.xululabs.us/sites/default/files/appimages/"+name);
+		Document data=Starter.getResult(path);
 		
 			url=data.location();
 			System.err.println(url);
@@ -84,16 +84,20 @@ public class SearchController {
 				if(tempLink=="")
 				{
 					movieDetails.add("NO IMDB DETAILS IN SEARCH");
-					System.out.println("File deleted"+temp_file.exists());
-					System.out.println(temp_file.delete());
+					System.out.println("File deleted from 2nd IF block "+temp_file.exists());
+					System.err.println(temp_file.delete());
+					System.out.println("File deleted from 2nd IF block "+new File(file.getOriginalFilename()).exists());
+					System.err.println(new File(file.getOriginalFilename()).delete());
 					
 				}else{
 			movieId=getMovieId(tempLink);
 			movieDetails=Services.getImdbData(movieId);
 			
 			
-			System.out.println("File deleted"+temp_file.exists());
-			System.out.println(temp_file.delete());
+			System.out.println("File deleted from 2nd ELSE block "+temp_file.exists());
+			System.err.println(temp_file.delete());
+			System.out.println("File deleted from 2nd ELSE block "+new File(file.getOriginalFilename()).exists());
+			System.err.println(new File(file.getOriginalFilename()).delete());
 				}
 			
 			
@@ -106,10 +110,13 @@ public class SearchController {
 			
 		
 		System.out.println(movieDetails.toString());
-		System.out.println("File deleted"+temp_file.exists());
+		System.out.println("File deleted from 1st ELSE block "+temp_file.exists());
 		System.out.println(temp_file.delete());
-		
+		System.out.println("File deleted from 2nd IF block "+new File(file.getOriginalFilename()).exists());
+		System.err.println(new File(file.getOriginalFilename()).delete());
 		}
+		
+		
 		return movieDetails;
 	}
 	
@@ -170,6 +177,7 @@ public class SearchController {
 	
 	public File convert(MultipartFile file) throws IOException
 	{    
+		
 		System.out.println("In the file conversion method");
 		File convFile = new File(file.getOriginalFilename());
 	    convFile.createNewFile(); 
