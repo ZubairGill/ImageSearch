@@ -26,8 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class SearchController {
 
 	
-	private final static  String BASE_PATH="images/"; //for local
-	//private final static  String BASE_PATH="/mnt/www/flickwiz.xululabs.us/htdocs/sites/default/files/appimages/"; //for server
+	//private final static  String BASE_PATH="images/"; //for local
+	private final static  String BASE_PATH="/mnt/www/flickwiz.xululabs.us/htdocs/sites/default/files/appimages/"; //for server
 	
 	@RequestMapping(value="/upload",method=RequestMethod.POST)
 	public LinkedList<String> searchImage(@RequestParam ("file") MultipartFile file) throws IOException
@@ -48,8 +48,8 @@ public class SearchController {
 		
 		
 		//System.out.println("http://flickwiz.xululabs.us/sites/default/files/appimages/"+name);
-		//Document data=Starter.getResult("http://flickwiz.xululabs.us/sites/default/files/appimages/"+name);
-		Document data=Starter.getResult(path);
+		Document data=Starter.getResult("http://flickwiz.xululabs.us/sites/default/files/appimages/"+name);
+		//Document data=Starter.getResult(path);
 		
 			url=data.location();
 			System.err.println(url);
