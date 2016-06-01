@@ -85,7 +85,7 @@ public class SearchController {
 				{
 					movieDetails.add("NO IMDB DETAILS IN SEARCH");
 					System.out.println("File deleted"+temp_file.exists());
-					//System.out.println(temp_file.delete());
+					System.out.println(temp_file.delete());
 					
 				}else{
 			movieId=getMovieId(tempLink);
@@ -93,11 +93,11 @@ public class SearchController {
 			
 			
 			System.out.println("File deleted"+temp_file.exists());
-			//System.out.println(temp_file.delete());
+			System.out.println(temp_file.delete());
 				}
 			
 			
-			System.out.println("File deleted"+temp_file.exists());
+			//System.out.println("File deleted"+temp_file.exists());
 			//System.out.println(temp_file.delete());
 			return movieDetails;
 		}else{
@@ -107,7 +107,7 @@ public class SearchController {
 		
 		System.out.println(movieDetails.toString());
 		System.out.println("File deleted"+temp_file.exists());
-		//System.out.println(temp_file.delete());
+		System.out.println(temp_file.delete());
 		
 		}
 		return movieDetails;

@@ -12,7 +12,7 @@ function run {
 
 	nohup java -jar target/googleImagesSearch-0.0.1-SNAPSHOT.jar > logs.txt &
 	echo $! > pid.dat
-	echo "flickwiz_new Server started succesfully..."
+	echo "GOOGLE search Server started succesfully..."
 }
 
 
@@ -32,7 +32,7 @@ if [[ $ACTION == 'start' ]]; then
 		fi
 	else
 		PID=`cat pid.dat`
-		echo "flickwiz_new Service already running under PID $PID"
+		echo "GOOGLE image  Service already running under PID $PID"
 	fi
 
 elif [[ $ACTION == 'stop' ]]; then
@@ -43,7 +43,7 @@ elif [[ $ACTION == 'stop' ]]; then
 
 			sudo kill -9 $PID
 			> pid.dat
-			echo "flickwiz_new Service stoped successfully."
+			echo "GOOGLE image Service stoped successfully."
 
 		else 
 
@@ -57,7 +57,7 @@ elif [[ $ACTION == 'status' ]]; then
 				PID=`cat pid.dat`
 
 				if ps -p $PID > null ;then
-					echo "flickwiz_new Service running under PID $PID"
+					echo "GOOGLE image Service running under PID $PID"
 				else
 
 					> pid.dat
