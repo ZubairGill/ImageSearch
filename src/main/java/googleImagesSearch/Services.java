@@ -45,6 +45,7 @@ public class Services {
 			dataIMDB.add(map.get("Plot"));
 			dataIMDB.add(map.get("imdbRating"));
 			dataIMDB.add(map.get("imdbID"));
+			dataIMDB.add(map.get("Poster"));
 
 			dataIMDB.addFirst("http://www.imdb.com/title/"
 					+ map.get("imdbID").toString() + "/");
