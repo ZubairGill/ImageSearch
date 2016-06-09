@@ -32,7 +32,7 @@ public class SearchController {
 	private final static  String BASE_PATH="/mnt/www/flickwiz.xululabs.us/htdocs/sites/default/files/appimages/"; //for server
 	
 	@RequestMapping(value="/upload",method=RequestMethod.POST)
-	public LinkedList<String> searchImage(@RequestParam ("file") MultipartFile file) throws IOException
+	public LinkedList<String> searchImage(@RequestParam ("file") MultipartFile file) 
 	{
 		LinkedList<String> movieDetails=new LinkedList<String>();
 		String movieId="";
@@ -45,7 +45,7 @@ public class SearchController {
 		
 		File temp_file=convert(file);
 		//String path="https://www.sideshowtoy.com/assets/products/902040-iron-man-mark-17-heartbreaker/lg/902040-iron-man-mark-17-heartbreaker-007.jpg";
-		//System.out.println("Enter the URL of the Images...");
+	//	System.out.println("Enter the URL of the Images...");
 		//String path=input.nextLine();
 		temp_file=saveImageforUrl(temp_file);
 		String name=temp_file.getName();

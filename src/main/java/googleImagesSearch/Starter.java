@@ -114,6 +114,7 @@ public class Starter {
 	{
 		Document document1 = null;
 		try {
+			System.out.println("https://images.google.com//searchbyimage?image_url="+url);
 			document1 = Jsoup.connect("https://images.google.com//searchbyimage?image_url="+url)
 //http://images.all-free-download.com/images/graphiclarge/daisy_pollen_flower_220533.jpg")
 					.header("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
@@ -137,6 +138,7 @@ public class Starter {
 	{
 		Document document = null;
 		try {
+			System.out.println(url);
 			document = Jsoup.connect(url)
 					.header("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
 					//.header("Referer","https://images.google.com/")
