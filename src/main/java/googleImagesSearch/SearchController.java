@@ -34,6 +34,11 @@ public class SearchController {
 	@RequestMapping(value="/upload",method=RequestMethod.POST)
 	public LinkedList<String> searchImage(@RequestParam ("file") MultipartFile file) 
 	{
+		System.out.println();
+		System.out.println("................NEW REQUEST..................");
+		System.out.println();
+	
+		
 		LinkedList<String> movieDetails=new LinkedList<String>();
 		String movieId="";
 		String movieName="";
@@ -41,10 +46,9 @@ public class SearchController {
 		String url="";
 		String imbdCard=" site:imdb.com";
 		String safeCard="&safe=active&q=";
-		//Scanner input =new Scanner(System.in);
+		Scanner input =new Scanner(System.in);
 		
 		File temp_file=convert(file);
-		//String path="https://www.sideshowtoy.com/assets/products/902040-iron-man-mark-17-heartbreaker/lg/902040-iron-man-mark-17-heartbreaker-007.jpg";
 		//System.out.println("Enter the URL of the Images...");
 		//String path=input.nextLine();
 		temp_file=saveImageforUrl(temp_file);
@@ -65,8 +69,12 @@ public class SearchController {
 			finaleUrl=url+safeCard+movieName+imbdCard;
 			
 			
-		Elements d=data.select("#rso .g:first-child");
-		//System.out.println(d.toString());
+		//Elements d=data.select("#rso .g:first-child");
+		Elements d=data.select("a[href*=http://www.imdb.com/title/]");
+		
+//		for (Element da:d){
+//		System.out.println("The result of the query is = "+da.toString());
+//		}
 		Elements links=d.select("a");
 		//System.out.println(links.toString());
 		String temp=getUrl(links);
@@ -79,19 +87,21 @@ public class SearchController {
 			//Going for 2nd option..
 			System.err.println(finaleUrl);
 			Document dataWithCard=Starter.secondSearch(finaleUrl);
-			Elements dd=dataWithCard.select("#rso .g:first-child");
-			//System.out.println(d.toString());
+			Elements dd=dataWithCard.select("a[href*=http://www.imdb.com/title/]");
+//			for (Element da:dd){
+//				System.out.println("The result of the query is = "+da.toString());
+//				}
+//			//System.out.println(d.toString());
 			Elements linkhref=dd.select("a");
 			//System.out.println(linkhref.toString());		
-			
 			String tempLink=getUrl(linkhref);
 				if(tempLink=="")
 				{
 					movieDetails.add("NO IMDB DETAILS IN SEARCH");
-					System.out.println("File deleted from 2nd IF block "+temp_file.exists());
-					System.err.println(temp_file.delete());
-					System.out.println("File deleted from 2nd IF block "+new File(file.getOriginalFilename()).exists());
-					System.err.println(new File(file.getOriginalFilename()).delete());
+					System.out.print("File deleted from 2nd IF block "+temp_file.exists()+"  ");
+					System.err.print(temp_file.delete()+"  ");
+					System.out.print(new File(file.getOriginalFilename()).exists()+"  ");
+					System.err.print(new File(file.getOriginalFilename()).delete()+"  ");
 					
 				}else{
 					
@@ -102,7 +112,7 @@ public class SearchController {
 			System.out.println("File deleted from 2nd ELSE block "+temp_file.exists()+" ");
 			System.err.print(temp_file.delete()+" ");
 			System.out.print(new File(file.getOriginalFilename()).exists()+" ");
-			System.err.print(new File(file.getOriginalFilename()).delete()+" ");
+			System.err.println(new File(file.getOriginalFilename()).delete()+" ");
 				}
 			
 			
@@ -118,7 +128,7 @@ public class SearchController {
 		System.out.print("File deleted from 1st ELSE block "+temp_file.exists()+" ");
 		System.out.print(temp_file.delete()+" ");
 		System.out.print(new File(file.getOriginalFilename()).exists()+" ");
-		System.err.print(new File(file.getOriginalFilename()).delete()+" ");
+		System.err.println(new File(file.getOriginalFilename()).delete()+" ");
 		}
 		
 		System.out.println("Output: "+movieDetails.toString());
