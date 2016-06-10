@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -114,6 +116,7 @@ public class Starter {
 	{
 		Document document1 = null;
 		try {
+			
 			System.out.println("https://images.google.com//searchbyimage?image_url="+url);
 			document1 = Jsoup.connect("https://images.google.com//searchbyimage?image_url="+url)
 //http://images.all-free-download.com/images/graphiclarge/daisy_pollen_flower_220533.jpg")
@@ -122,15 +125,23 @@ public class Starter {
 					.header("Upgrade-Insecure-Requests","1")
 					.header("User-Agent","Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36")
 					.get();
+//			
+//			BufferedWriter wr1=new BufferedWriter(new FileWriter("index2.html"));
+//			wr1.write(document1.toString());
+//			wr1.close();
 		} catch (IOException e) {
 			System.err.println("The error is in getting result from the google first attemp..");
 			e.printStackTrace();
 		}
 		
-		//BufferedWriter wr1=new BufferedWriter(new FileWriter("index2.html"));
-		//wr1.write(document1.toString());
-		//wr1.close();
-		//System.err.println(document1.location());
+		try {
+			System.out.println("The Ip of the system is :"+InetAddress.getLocalHost().getHostAddress());
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.err.println(document1.location());
 		return document1;
 	}
 	
@@ -138,6 +149,7 @@ public class Starter {
 	{
 		Document document = null;
 		try {
+			
 			System.out.println(url);
 			document = Jsoup.connect(url)
 					.header("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
@@ -145,15 +157,23 @@ public class Starter {
 					.header("Upgrade-Insecure-Requests","1")
 					.header("User-Agent","Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36")
 					.get();
+			
+			BufferedWriter wr=new BufferedWriter(new FileWriter("index.html"));
+			wr.write(document.toString());
+			wr.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-//		BufferedWriter wr=new BufferedWriter(new FileWriter("index.html"));
-//		wr.write(document.toString());
-//		wr.close();
+
 		
+		try {
+			System.out.println("The Ip of the system is :"+InetAddress.getLocalHost().getHostAddress());
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return document;
 	}
 	

@@ -41,11 +41,11 @@ public class SearchController {
 		String url="";
 		String imbdCard=" site:imdb.com";
 		String safeCard="&safe=active&q=";
-		Scanner input =new Scanner(System.in);
+		//Scanner input =new Scanner(System.in);
 		
 		File temp_file=convert(file);
 		//String path="https://www.sideshowtoy.com/assets/products/902040-iron-man-mark-17-heartbreaker/lg/902040-iron-man-mark-17-heartbreaker-007.jpg";
-	//	System.out.println("Enter the URL of the Images...");
+		//System.out.println("Enter the URL of the Images...");
 		//String path=input.nextLine();
 		temp_file=saveImageforUrl(temp_file);
 		String name=temp_file.getName();
@@ -65,7 +65,7 @@ public class SearchController {
 			finaleUrl=url+safeCard+movieName+imbdCard;
 			
 			
-		Elements d=data.select("#rso >.srg > .g:first-child");
+		Elements d=data.select("#rso .g:first-child");
 		//System.out.println(d.toString());
 		Elements links=d.select("a");
 		//System.out.println(links.toString());
@@ -79,7 +79,7 @@ public class SearchController {
 			//Going for 2nd option..
 			System.err.println(finaleUrl);
 			Document dataWithCard=Starter.secondSearch(finaleUrl);
-			Elements dd=dataWithCard.select("#rso >.srg > .g:first-child");
+			Elements dd=dataWithCard.select("#rso .g:first-child");
 			//System.out.println(d.toString());
 			Elements linkhref=dd.select("a");
 			//System.out.println(linkhref.toString());		
