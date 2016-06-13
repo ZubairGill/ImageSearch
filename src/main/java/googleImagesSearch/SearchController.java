@@ -44,16 +44,16 @@ public class SearchController {
 		String movieName="";
 		String finaleUrl="";
 		String url="";
-		String imbdCard=" site:imdb.com";
+		String imbdCard=" site:imdb.com/title";
 		String safeCard="&safe=active&q=";
-		Scanner input =new Scanner(System.in);
+		//Scanner input =new Scanner(System.in);
 		
 		File temp_file=convert(file);
-		//System.out.println("Enter the URL of the Images...");
-		//String path=input.nextLine();
+//		System.out.println("Enter the URL of the Images...");
+//		String path=input.nextLine();
 		temp_file=saveImageforUrl(temp_file);
 		String name=temp_file.getName();
-		System.out.println(name);
+		//System.out.println(name);
 		
 		
 		//System.out.println("http://flickwiz.xululabs.us/sites/default/files/appimages/"+name);
@@ -61,12 +61,7 @@ public class SearchController {
 		//Document data=Starter.getResult(path);
 		
 			url=data.location();
-			//System.err.println(url);
-			Elements e=data.getElementsByClass("_gUb");
-			movieName=e.get(0).text().toString();
-			//System.err.println(safeCard+movieName+imbdCard);
-		
-			finaleUrl=url+safeCard+movieName+imbdCard;
+			finaleUrl=url+safeCard+imbdCard;
 			
 			
 		//Elements d=data.select("#rso .g:first-child");
@@ -87,14 +82,14 @@ public class SearchController {
 			//Going for 2nd option..
 			System.err.println(finaleUrl);
 			Document dataWithCard=Starter.secondSearch(finaleUrl);
-			Elements dd=dataWithCard.select("a[href*=http://www.imdb.com/title/]");
+			Elements dd=dataWithCard.select("img[title*=http://www.imdb.com/title/]");
 //			for (Element da:dd){
 //				System.out.println("The result of the query is = "+da.toString());
 //				}
 //			//System.out.println(d.toString());
-			Elements linkhref=dd.select("a");
+			//Elements linkhref=dd.select("title");
 			//System.out.println(linkhref.toString());		
-			String tempLink=getUrl(linkhref);
+			String tempLink=getUrlfromTitle(dd);
 				if(tempLink=="")
 				{
 					movieDetails.add("NO IMDB DETAILS IN SEARCH");
@@ -140,15 +135,15 @@ public class SearchController {
 		
 		String id="";
 	
-		System.out.println("The url is :"+temp);
+		//System.out.println("The url is :"+temp);
 		
 		int beginIndex=temp.indexOf("/tt")+1;
 		int endIndex=beginIndex+9;
 		
 		
 		
-		System.out.print("Start index : "+beginIndex);
-		System.out.println(" End index : "+endIndex);
+		//System.out.print("Start index : "+beginIndex);
+		//System.out.println(" End index : "+endIndex);
 		
 		id=temp.substring(beginIndex, endIndex);
 		
@@ -164,7 +159,24 @@ public class SearchController {
 		for(int i=0;i<links.size();i++)
 		{
 			 site=links.get(i).attr("href");
-				if(site.contains(("http://www.imdb.com/title")))
+				if(site.contains(("http://www.imdb.com/title")) ||site.contains(("/tt")) )
+					{
+						temp=site;
+					System.err.println(site);
+					return site;
+					}else{
+						//System.out.println("Does not contain this uurl");
+					}
+		}
+		return temp;
+	}
+	private String getUrlfromTitle(Elements links) {
+		String site="";
+		String temp="";
+		for(int i=0;i<links.size();i++)
+		{
+			 site=links.get(i).attr("title");
+				if(site.contains(("http://www.imdb.com/title")) ||site.contains(("/tt")) )
 					{
 						temp=site;
 					System.err.println(site);
@@ -176,10 +188,9 @@ public class SearchController {
 		return temp;
 	}
 
-
 	private static File saveImageforUrl(File file) 
 	{
-		System.out.println("In the file save method");
+		//System.out.println("In the file save method");
 		 
 		File temp=new File(BASE_PATH+"/temp"+System.currentTimeMillis()+"img.jpg");
 		//File temp=new File("temp"+System.currentTimeMillis()+"img.jpg");
@@ -203,7 +214,7 @@ public class SearchController {
 	
 	public File convert(MultipartFile file) 
 	{    
-		System.out.println("In the file conversion method");
+		//System.out.println("In the file conversion method");
 		File convFile = new File(file.getOriginalFilename());
 	    try {
 			convFile.createNewFile();

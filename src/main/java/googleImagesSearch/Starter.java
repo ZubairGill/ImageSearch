@@ -133,15 +133,7 @@ public class Starter {
 			System.err.println("The error is in getting result from the google first attemp..");
 			e.printStackTrace();
 		}
-		
-		try {
-			System.out.println("The Ip of the system is :"+InetAddress.getLocalHost().getHostAddress());
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		System.err.println(document1.location());
+		//System.err.println(document1.location());
 		return document1;
 	}
 	
@@ -165,16 +157,7 @@ public class Starter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-
-		
-		try {
-			System.out.println("The Ip of the system is :"+InetAddress.getLocalHost().getHostAddress());
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return document;
+				return document;
 	}
 	
 	private static String trimUrl(String data) {
